@@ -4,7 +4,6 @@ require('dotenv').config()
 const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
-
 const apiRoutes = require('./server/routes/routes')
 
 const PORT = process.env.PORT || 5000
@@ -18,8 +17,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'client/build')))
 app.use('/', apiRoutes)
 
-app.get('*', (req, res) => { // resolve invalid urls
-  res.sendFile(path.join(__dirname, '/client/build/index.html'))
+app.get('*', (req, res) => {
+  const relPath = process.env.NODE_ENV === 'production'
+    ? '/client/build/index.html'
+    : '/client/public/index.html'
+  res.sendFile(path.join(__dirname, relPath))
 })
 
 app.listen(PORT, () => {
