@@ -9,8 +9,8 @@ const formatStoryline = film => {
   return (
     <div>
       {
-        film.Storylines.map(story => (
-          <div>
+        film.Storylines.map((story, index) => (
+          <div key={index}>
             <strong>{story.Type}</strong>
             <br />
             {story.Description}

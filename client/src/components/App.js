@@ -3,43 +3,52 @@ import axios from 'axios'
 
 import SearchForm from './SearchForm'
 import FilmList from './FilmList'
+import filmMatchesQuery from '../helpers/filmMatchesQuery'
 
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = { films: null }
-    this.getFilms = this.getFilms.bind(this)
+    this.state = {
+      allFilms: null,
+      filteredFilms: null
+    }
+    this.getAllFilms = this.getAllFilms.bind(this)
+    this.filterFilms = this.filterFilms.bind(this)
   }
 
   componentDidMount () {
-    this.getFilms()
+    this.getAllFilms()
   }
 
-  getFilms (title = null) {
-    const url = title ? `/films/${title}` : '/films'
-
-    axios.get(url)
+  getAllFilms () {
+    axios.get('/films')
       .then(response => {
-        const films = response.data
-        this.setState(prev => ({ ...prev, films }))
+        const allFilms = response.data
+        this.setState(prev => ({
+          ...prev,
+          allFilms,
+          filteredFilms: allFilms
+        }))
       })
-      .catch(error => {
-        console.error('Houston, we have a problem:', error)
-        this.setState(prev => ({ ...prev, films: [] }))
-      })
+      .catch(error => console.error(error))
+  }
+
+  filterFilms (query) {
+    const allFilms = this.state.allFilms
+    const filteredFilms = allFilms.filter(film => (
+      filmMatchesQuery(film, query)
+    ))
+    this.setState(prev => ({ ...prev, filteredFilms }))
   }
 
   render () {
+    const films = this.state.filteredFilms
     return (
       <div className='app'>
-        <h1 id="page-header">What should I watch tonight?</h1>
-        <SearchForm
-          onSearch={this.getFilms} />
-        {
-          (this.state.films)
-            ? (<FilmList data={this.state.films} />)
-            : ''
-        }
+        <SearchForm onChange={this.filterFilms} />
+        { films != null
+          ? <FilmList data={this.state.filteredFilms} />
+          : null }
       </div>
     )
   }

@@ -1,21 +1,24 @@
 import React from 'react'
 
 const formatAwards = film => {
-  if (!film.Awards) return
+  if (!film.Awards || !film.Awards.length) return
 
   /** @namespace award.AwardWon */
   /** @namespace award.Award */
   /** @namespace award.AwardCompany */
   return (
     <div>
-      {
-        film.Awards.map(award => (
-          <p>
-            {award.AwardWon ? 'Winner: ' : 'Nominated: '}
-            <strong>{award.Award}</strong> ({award.AwardCompany})
-          </p>
-        ))
-      }
+      <h3 style={{ 'text-align': 'center' }}>Awards</h3>
+      <ul>
+        {
+          film.Awards.map((award, index) => (
+            <li key={index}>
+              {award.AwardWon ? 'Winner: ' : 'Nominated: '}
+              <strong>{award.Award}</strong> ({award.AwardCompany})
+            </li>
+          ))
+        }
+      </ul>
     </div>
   )
 }
