@@ -1,13 +1,20 @@
 import React from 'react'
-import { ListGroupItem } from 'react-bootstrap'
+import { Col, Card, CardBody, CardTitle } from 'reactstrap'
 
 const FilmNotFound = () => {
   return (
-    <ListGroupItem>
-      I couldn't find the title you're looking for...<br />
-      (Hint: Your options are quite limited. May I advise you
-      take a gander at the full list instead?)
-    </ListGroupItem>
+    <Col>
+      <Card>
+        <CardBody>
+          <CardTitle style={{ fontSize: '2rem' }}>
+            I couldn't find the title you're looking for...
+            <br />
+            (Hint: Your options are quite limited. May I advise you
+            take a gander at the full list instead?)
+          </CardTitle>
+        </CardBody>
+      </Card>
+    </Col>
   )
 }
 

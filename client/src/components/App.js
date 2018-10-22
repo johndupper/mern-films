@@ -21,13 +21,13 @@ class App extends Component {
   }
 
   getAllFilms () {
-    axios.get('/films').then(response => {
-      this.setState(prev => ({
-        ...prev,
-        allFilms: response.data,
-        filteredFilms: response.data
-      }))
-    }).catch(error => console.error(error))
+    axios.get('/films')
+      .then(response => {
+        this.setState({
+          allFilms: response.data,
+          filteredFilms: response.data
+        })
+      }).catch(error => console.error(error))
   }
 
   filterFilms (query) {

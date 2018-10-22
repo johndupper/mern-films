@@ -1,17 +1,25 @@
 import React, { Component } from 'react'
 import {
   Button, Col,
-  Card, CardSubtitle, CardText,
-  CardBody, CardTitle, Modal,
+  Card, CardSubtitle,
+  CardBody, CardTitle, CardText, Modal,
   ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap'
 
+import formatStorylines from '../formatters/formatStorylines'
 import formatAwards from '../formatters/formatAwards'
+import formatCast from '../formatters/formatCast'
 
 class FilmCard extends Component {
   constructor (props) {
     super(props)
-    this.state = { modal: false }
+    this.state = {
+      modal: false,
+      collapse: {
+        cast: false,
+        awards: false
+      }
+    }
     this.toggleModal = this.toggleModal.bind(this)
   }
 
@@ -20,21 +28,27 @@ class FilmCard extends Component {
   }
 
   render () {
-    const {
-      TitleName, ReleaseYear, Genres,
-      Storylines, Participants
-    } = this.props.data
+    const film = this.props.data
+    const { TitleName, ReleaseYear, Genres } = film
 
     return (
-      <Col sm='12' lg='6'>
+      <Col xs='12'>
         <Card>
           <CardBody>
 
-            <CardTitle>{TitleName} ({ReleaseYear})</CardTitle>
-            <CardSubtitle>{Genres.join(', ')}</CardSubtitle>
-            <CardText>...</CardText>
+            <CardTitle style={{ fontSize: '2rem' }}>
+              {TitleName} ({ReleaseYear})
+            </CardTitle>
 
-            <Button onClick={this.toggleModal}>
+            <CardSubtitle style={{ fontSize: '1.75rem' }}>
+              {Genres.join(', ')}
+            </CardSubtitle>
+
+            <br />
+
+            <CardText>{formatStorylines(film)}</CardText><br />
+
+            <Button size='lg' onClick={this.toggleModal} >
               Show Film Details
             </Button>
 
@@ -48,18 +62,8 @@ class FilmCard extends Component {
                     <ModalHeader>{TitleName}</ModalHeader>
 
                     <ModalBody>
-                      {Storylines[0].Description || null}
-                      <br />
-                      {
-                        <strong>
-                          {Participants
-                            .filter(p => p['IsKey'])
-                            .map(p => p.Name)
-                            .join(', ')}
-                        </strong>
-                      }
-                      <br />
-                      {formatAwards(this.props.data)}
+                      {formatCast(film)}
+                      {formatAwards(film)}
                     </ModalBody>
 
                     <ModalFooter>

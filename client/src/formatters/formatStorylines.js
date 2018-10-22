@@ -7,16 +7,8 @@ const formatStoryline = film => {
   /** @namespace story.Type */
   /** @namespace story.Description */
   return (
-    <div>
-      {
-        film.Storylines.map((story, index) => (
-          <div key={index}>
-            <strong>{story.Type}</strong>
-            <br />
-            {story.Description}
-          </div>
-        ))
-      }
+    <div style={{ fontSize: '1.5rem' }}>
+      <p>{film.Storylines[0].Description}</p>
     </div>
   )
 }
