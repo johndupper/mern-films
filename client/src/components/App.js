@@ -21,16 +21,13 @@ class App extends Component {
   }
 
   getAllFilms () {
-    axios.get('/films')
-      .then(response => {
-        const allFilms = response.data
-        this.setState(prev => ({
-          ...prev,
-          allFilms,
-          filteredFilms: allFilms
-        }))
-      })
-      .catch(error => console.error(error))
+    axios.get('/films').then(response => {
+      this.setState(prev => ({
+        ...prev,
+        allFilms: response.data,
+        filteredFilms: response.data
+      }))
+    }).catch(error => console.error(error))
   }
 
   filterFilms (query) {
@@ -43,12 +40,11 @@ class App extends Component {
 
   render () {
     const films = this.state.filteredFilms
+
     return (
       <div className='app'>
         <SearchForm onChange={this.filterFilms} />
-        { films != null
-          ? <FilmList data={this.state.filteredFilms} />
-          : null }
+        { films != null ? <FilmList data={films} /> : null }
       </div>
     )
   }

@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
-import { InputGroup, Input } from 'reactstrap'
+import { Row, Col, Input } from 'reactstrap'
 
+const inputStyles = {
+  'height': '10vh',
+  'font-size': '1.75rem',
+  'text-align': 'center'
+}
 export default class SearchForm extends Component {
   constructor (props) {
     super(props)
@@ -13,12 +18,15 @@ export default class SearchForm extends Component {
 
   render () {
     return (
-      <InputGroup>
-        <Input
-          placeholder='search by film name'
-          onChange={this.onChange}
-        />
-      </InputGroup>
+      <Row>
+        <Col lg='12'>
+          <Input
+            style={inputStyles}
+            placeholder='search by film name, release year, or genre...'
+            onChange={this.onChange}
+          />
+        </Col>
+      </Row>
     )
   }
 }

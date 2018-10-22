@@ -1,22 +1,23 @@
 import React from 'react'
-import { ListGroup } from 'react-bootstrap'
-import { CardGroup } from 'reactstrap'
+import { CardDeck } from 'reactstrap'
 
-// import Film from './Film'
 import FilmCard from './FilmCard'
-import FilmNotFound from './FilmNotFound'
 
 const FilmList = props => {
   if (props.data === null) return <div />
 
   if (!props.data.length) {
-    return <ListGroup><FilmNotFound /></ListGroup>
+    return <p>no films found</p>
+  }
+
+  if (props.data.length === 1) {
+    // todo: diff. size for single card
   }
 
   return (
-    <CardGroup>
-      {props.data.map(f => <FilmCard data={f} />)}
-    </CardGroup>
+    <CardDeck>
+      {props.data.map((f, i) => <FilmCard data={f} key={i} />)}
+    </CardDeck>
   )
 }
 

@@ -8,7 +8,7 @@ const formatAwards = film => {
   /** @namespace award.AwardCompany */
   return (
     <div>
-      <h3 style={{ 'text-align': 'center' }}>Awards</h3>
+      <h4>Awards</h4>
       <ul>
         {
           film.Awards.map((award, index) => (

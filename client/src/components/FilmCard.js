@@ -1,41 +1,80 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
-  Card, CardSubtitle,
-  CardText, CardBody, CardTitle
+  Button, Col,
+  Card, CardSubtitle, CardText,
+  CardBody, CardTitle, Modal,
+  ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap'
 
 import formatAwards from '../formatters/formatAwards'
 
-const FilmCard = props => {
-  const {
-    TitleName, ReleaseYear, Genres, Storylines
-  } = props.data
+class FilmCard extends Component {
+  constructor (props) {
+    super(props)
+    this.state = { modal: false }
+    this.toggleModal = this.toggleModal.bind(this)
+  }
 
-  return (
-    <Card style={{ 'min-width': '300px', 'text-align': 'center' }}>
-      <CardBody>
-        <CardTitle style={{ 'font-size': '2.25rem' }}>
-          {TitleName} ({ReleaseYear})
-        </CardTitle>
+  toggleModal () {
+    this.setState(ps => ({ ...ps, modal: !ps.modal }))
+  }
 
-        <CardSubtitle style={{ 'font-size': '1.5rem' }}>
-          {Genres.join(', ')}
-        </CardSubtitle>
+  render () {
+    const {
+      TitleName, ReleaseYear, Genres,
+      Storylines, Participants
+    } = this.props.data
 
-        <br />
+    return (
+      <Col sm='12' lg='6'>
+        <Card>
+          <CardBody>
 
-        <CardText style={{ 'font-size': '1.2rem' }}>
-          {Storylines[0].Description}
-        </CardText>
+            <CardTitle>{TitleName} ({ReleaseYear})</CardTitle>
+            <CardSubtitle>{Genres.join(', ')}</CardSubtitle>
+            <CardText>...</CardText>
 
-        <br />
+            <Button onClick={this.toggleModal}>
+              Show Film Details
+            </Button>
 
-        <CardText style={{ 'font-size': '1.2rem', 'text-align': 'left' }}>
-          {formatAwards(props.data)}
-        </CardText>
-      </CardBody>
-    </Card>
-  )
+            {
+              this.state.modal
+                ? (
+                  <Modal
+                    isOpen={this.state.modal}
+                    toggle={this.toggleModal} >
+
+                    <ModalHeader>{TitleName}</ModalHeader>
+
+                    <ModalBody>
+                      {Storylines[0].Description || null}
+                      <br />
+                      {
+                        <strong>
+                          {Participants
+                            .filter(p => p['IsKey'])
+                            .map(p => p.Name)
+                            .join(', ')}
+                        </strong>
+                      }
+                      <br />
+                      {formatAwards(this.props.data)}
+                    </ModalBody>
+
+                    <ModalFooter>
+                      <Button onClick={this.toggleModal}>Close</Button>
+                    </ModalFooter>
+                  </Modal>
+                )
+                : (null)
+            }
+
+          </CardBody>
+        </Card>
+      </Col>
+    )
+  }
 }
 
 export default FilmCard
