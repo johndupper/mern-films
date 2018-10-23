@@ -3,7 +3,7 @@ const router = require('express').Router()
 const getAllFilms = require('../methods/getAllFilms')
 const getFilmByTitle = require('../methods/getFilmsByTitle')
 
-// api routes
+// get all films
 router.get('/films', (req, res) => {
   getAllFilms()
     .then(films => res.status(200).json(films))

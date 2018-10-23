@@ -1,20 +1,27 @@
 import React from 'react'
 
-const formatAwards = film => {
-  if (!film.Awards || !film.Awards.length) return
+// "pure" function
+const alphabetize = (a, b) => a.Award.localeCompare(b.Award)
 
-  /** @namespace award.AwardWon */
-  /** @namespace award.Award */
-  /** @namespace award.AwardCompany */
+const formatAwards = film => {
+  const { Awards } = film
+  if (!Awards || !Awards.length) return
+
+  Awards.sort(alphabetize)
+
+  /** @namespace a.AwardWon */
+  /** @namespace a.Award */
+  /** @namespace a.AwardCompany */
+
   return (
     <div>
       <h4>Awards</h4>
       <ul>
         {
-          film.Awards.map((award, index) => (
-            <li key={index}>
-              {award.AwardWon ? 'Winner: ' : 'Nominated: '}
-              <strong>{award.Award}</strong> ({award.AwardCompany})
+          Awards.map((a, i) => (
+            <li key={i}>
+              { a.AwardWon ? 'Winner: ' : 'Nominated: ' }
+              <strong>{ a.Award }</strong> ({ a.AwardCompany })
             </li>
           ))
         }

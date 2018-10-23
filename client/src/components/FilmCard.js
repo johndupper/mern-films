@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import {
-  Button, Col,
-  Card, CardSubtitle,
-  CardBody, CardTitle, CardText, Modal,
+  Button, Col, Card, Modal,
+  CardTitle, CardSubtitle, CardBody, CardText,
   ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap'
 
@@ -13,18 +12,13 @@ import formatCast from '../formatters/formatCast'
 class FilmCard extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      modal: false,
-      collapse: {
-        cast: false,
-        awards: false
-      }
-    }
+    this.state = { modal: false }
     this.toggleModal = this.toggleModal.bind(this)
   }
 
   toggleModal () {
-    this.setState(ps => ({ ...ps, modal: !ps.modal }))
+    const modal = !this.state.modal
+    this.setState(ps => ({ ...ps, modal }))
   }
 
   render () {
@@ -35,20 +29,13 @@ class FilmCard extends Component {
       <Col xs='12'>
         <Card>
           <CardBody>
-
-            <CardTitle style={{ fontSize: '2rem' }}>
-              {TitleName} ({ReleaseYear})
-            </CardTitle>
-
-            <CardSubtitle style={{ fontSize: '1.75rem' }}>
-              {Genres.join(', ')}
-            </CardSubtitle>
-
+            <CardTitle>{ TitleName } ({ ReleaseYear })</CardTitle>
+            <CardSubtitle>{ Genres.join(', ') }</CardSubtitle>
             <br />
 
-            <CardText>{formatStorylines(film)}</CardText><br />
+            <CardText>{ formatStorylines(film) }</CardText>
 
-            <Button size='lg' onClick={this.toggleModal} >
+            <Button onClick={this.toggleModal}>
               Show Film Details
             </Button>
 
@@ -57,23 +44,24 @@ class FilmCard extends Component {
                 ? (
                   <Modal
                     isOpen={this.state.modal}
-                    toggle={this.toggleModal} >
+                    toggle={this.toggleModal}>
 
-                    <ModalHeader>{TitleName}</ModalHeader>
+                    <ModalHeader>{ TitleName }</ModalHeader>
 
                     <ModalBody>
-                      {formatCast(film)}
-                      {formatAwards(film)}
+                      { formatCast(film) }
+                      { formatAwards(film) }
                     </ModalBody>
 
                     <ModalFooter>
-                      <Button onClick={this.toggleModal}>Close</Button>
+                      <Button onClick={this.toggleModal}>
+                        Close
+                      </Button>
                     </ModalFooter>
                   </Modal>
                 )
-                : (null)
+                : null
             }
-
           </CardBody>
         </Card>
       </Col>

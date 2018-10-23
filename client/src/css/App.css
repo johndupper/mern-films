@@ -1,0 +1,37 @@
+/* document */
+body { font-family: 'Signika', sans-serif; }
+li { font-size: 1.125rem; }
+
+/* search */
+.search-input {
+  height: 10vh;
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* film list */
+.card-title { font-size: 1.75rem; }
+.card-subtitle { font-size: 1.5rem; }
+.card-text { font-size: 1.25rem; }
+
+/* modal */
+.modal {
+  position: fixed;
+  top: 3%;
+  right: 3%;
+  left: 3%;
+  width: 90%;
+  margin: 0;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+}
+
+.modal-body {
+  height: 60%;
+  max-height: 80vh;
+  padding: 15px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}

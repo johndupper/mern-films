@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Input } from 'reactstrap'
 
-const searchStyle = {
-  height: '10vh',
-  fontSize: '1.75rem',
-  textAlign: 'center'
-}
+const placeholder = 'search by title, genre, year, actor...'
 
 export default class SearchForm extends Component {
   constructor (props) {
@@ -22,10 +18,9 @@ export default class SearchForm extends Component {
       <Row>
         <Col lg='12'>
           <Input
-            style={searchStyle}
-            placeholder='search by film name, release year, or genre...'
             onChange={this.onChange}
-          />
+            className='search-input'
+            placeholder={placeholder} />
         </Col>
       </Row>
     )

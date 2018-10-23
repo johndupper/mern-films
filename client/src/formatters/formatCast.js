@@ -1,10 +1,16 @@
 import React from 'react'
 
-const formatCast = props => {
-  const { Participants } = props
-  if (!Participants) return
+// "pure" function
+const alphabetize = (a, b) => a.RoleType.localeCompare(b.RoleType)
+
+const formatCast = film => {
+  const { Participants } = film
+  if (!Participants || !Participants.length) return
+
+  Participants.sort(alphabetize)
 
   /** @namespace p.RoleType */
+
   return (
     <div>
       <h4>Cast</h4>
@@ -12,7 +18,7 @@ const formatCast = props => {
         {
           Participants.map((p, i) => (
             <li key={i}>
-              <strong>{p.RoleType}</strong>: {p.Name}
+              <strong>{ p.RoleType }</strong>: { p.Name }
             </li>
           ))
         }

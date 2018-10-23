@@ -7,7 +7,6 @@ const getFilmByTitle = title => {
       return reject(error)
     }
 
-    // todo: include searching other document keys
     const query = {
       TitleName: {
         $regex: new RegExp(title, 'i')

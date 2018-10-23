@@ -8,6 +8,8 @@ const apiRoutes = require('./server/routes/routes')
 
 const PORT = process.env.PORT || 5000
 const DB_URL = process.env.MONGO_DB_URL
+
+// uncaught exception terminates process w/ non-zero exit code
 if (!DB_URL) throw Error('no database url provided')
 
 // express config

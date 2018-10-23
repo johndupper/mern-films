@@ -4,14 +4,13 @@ import { CardDeck } from 'reactstrap'
 import FilmCard from './FilmCard'
 import FilmNotFound from './FilmNotFound'
 
+// "dumb" component
 const FilmList = props => {
   if (!props.data.length) return <FilmNotFound />
 
   return (
     <CardDeck>
-      {
-        props.data.map((f, i) => <FilmCard data={f} key={i} />)
-      }
+      { props.data.map((f, i) => <FilmCard data={f} key={i} />) }
     </CardDeck>
   )
 }

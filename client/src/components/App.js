@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import SearchForm from './SearchForm'
 import FilmList from './FilmList'
-import filmMatchesQuery from '../helpers/filmMatchesQuery'
+import SearchForm from './SearchForm'
+import filterMatches from '../helpers/filterMatches'
 
-class App extends Component {
+export default class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -21,26 +21,23 @@ class App extends Component {
   }
 
   getAllFilms () {
-    axios.get('/films')
-      .then(response => {
-        this.setState({
-          allFilms: response.data,
-          filteredFilms: response.data
-        })
-      }).catch(error => console.error(error))
+    axios.get('/films').then(response => {
+      const { data } = response
+      const state = { allFilms: data, filteredFilms: data }
+      this.setState(state)
+    }).catch(error => {
+      console.error(error)
+    })
   }
 
   filterFilms (query) {
-    const allFilms = this.state.allFilms
-    const filteredFilms = allFilms.filter(film => (
-      filmMatchesQuery(film, query)
-    ))
+    const { allFilms } = this.state
+    const filteredFilms = filterMatches(allFilms, query)
     this.setState(prev => ({ ...prev, filteredFilms }))
   }
 
   render () {
     const films = this.state.filteredFilms
-
     return (
       <div className='app'>
         <SearchForm onChange={this.filterFilms} />
@@ -49,5 +46,3 @@ class App extends Component {
     )
   }
 }
-
-export default App

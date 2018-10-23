@@ -1,15 +1,12 @@
-import React from 'react'
-
 const formatStoryline = film => {
-  /** @namespace film.Storylines */
-  if (!film.Storylines) return
+  const { Storylines } = film
+  if (!Storylines || !Storylines.length) return
 
-  /** @namespace story.Type */
-  /** @namespace story.Description */
+  /** @namespace Storylines.Type */
+  /** @namespace Storylines.Description */
+
   return (
-    <div style={{ fontSize: '1.5rem' }}>
-      <p>{film.Storylines[0].Description}</p>
-    </div>
+    `${Storylines[0].Type}: ${Storylines[0].Description}`
   )
 }
 
