@@ -9,6 +9,7 @@
   },
   "scripts": {
     "lint": "standard --fix",
+    "demo": "npm start & cd client && npm start",
     "start": "npm install && node index.js",
     "dev": "npm run lint && nodemon index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
